@@ -1,46 +1,114 @@
-# Getting Started with Create React App
+# VS Code Extensions 에서 ESLint, Prettier 설치
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# yarn 설치
 
-## Available Scripts
+```bash
+npm i -g yarn
 
-In the project directory, you can run:
+# 권한 오류 나면 Windows PowerShell 에서 아래 명령어 실행
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+# 재설치
+npm i -g yarn
+```
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# react-typescript
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+npx create-react-app . --template typescript
+```
 
-### `npm test`
+# .prettierrc.json 파일 생성 후 eslint 와 prettier 연결
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# prettier 설치 
+yarn add --dev --exact prettier
 
-### `npm run build`
+# 파일 생성
+echo {}> .prettierrc.json
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# eslint 초기 설정
+yarn run eslint --init
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+? How would you like to use ESLint? ...
+  To check syntax only
+  To check syntax and find problems
+> To check syntax, find problems, and enforce code style
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+? What type of modules does your project use? ... 
+> JavaScript modules (import/export)
+  CommonJS (require/exports)
+  None of these
 
-### `npm run eject`
+? Which framework does your project use? ...       
+> React
+  Vue.js
+  None of these
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+? Does your project use TypeScript? 
+  No 
+> Yes
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+? Where does your code run? ...  (Press <space> to select, <a> to toggle all, <i> to invert selection)
+√ Browser
+√ Node
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+? How would you like to define a style for your project? ... 
+> Use a popular style guide
+  Answer questions about your style
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+? Which style guide do you want to follow? ...
+> Standard: https://github.com/standard/eslint-config-standard-with-typescript
+  XO: https://github.com/xojs/eslint-config-xo-typescript
+  
+? What format do you want your config file to be in? ...
+> JavaScript
+  YAML
+  JSON
 
-## Learn More
+? Would you like to install them now? 
+  No 
+> Yes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+? Which package manager do you want to use? ... 
+  npm
+> yarn
+  pnpm
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# .eslintrc.js 파일 수정
+
+```js
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    "plugin:react/recommended",
+    "standard",
+    "prettier",
+    "plugin:storybook/recommended",
+  ],
+  parser: "@typescript-eslint/parser",
+  overrides: [],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: "latest",
+    sourceType: "module",
+  },
+  plugins: ["react", "@typescript-eslint"],
+  rules: {
+    "react/prop-types": "off",
+  },
+};
+```
+
+
+# eslint 와 prettier 연결
+```
+yarn add eslint-config-prettier --dev
+```
+
